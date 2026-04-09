@@ -32,7 +32,7 @@ modes/_profile.md
     opportunity evaluation
           |
           +--> report in reports/
-          +--> PDF or proposal output in output/
+          +--> artifact output in output/
           +--> tracker update in data/applications.md
 ```
 

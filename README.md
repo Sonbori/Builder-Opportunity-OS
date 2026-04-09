@@ -36,7 +36,7 @@ That makes it useful for more than hiring:
 |----------|---------------|
 | `evaluate` | Score a role, client brief, or opportunity against your targets |
 | `scan` | Search job boards, freelance sources, communities, and tracked targets for new leads |
-| `pdf` | Generate a tailored resume or one-page profile |
+| `pdf` | Generate the right artifact: resume, proposal, DM, one-pager, or sprint plan |
 | `project` | Decide whether a side project is worth building |
 | `training` | Evaluate a course or certification by real ROI |
 | `tracker` | Manage the full opportunity pipeline in one place |
@@ -93,7 +93,8 @@ go build -o opportunity-dashboard .
 - `Turn this freelance brief into a scoped proposal and tracker entry.`
 - `Scan my configured sources for data engineering and automation opportunities.`
 - `Compare these three opportunities and rank them by upside.`
-- `Generate a tailored resume for this opportunity.`
+- `Generate the right artifact for this opportunity.`
+- `Create a short outreach DM for this collaboration lead.`
 - `Should I build this side project or skip it?`
 
 ## Status Model
