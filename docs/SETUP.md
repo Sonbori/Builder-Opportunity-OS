@@ -29,6 +29,14 @@ modes/_profile.md
 portals.yml
 ```
 
+Treat `portals.yml` as a mixed intake config, not only a job-board list.
+It should cover:
+
+- full-time role sources
+- freelance brief sources
+- collaboration communities
+- learning sources that can turn into visible proof
+
 ## Core Commands
 
 ```bash

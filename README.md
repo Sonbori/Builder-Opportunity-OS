@@ -35,7 +35,7 @@ That makes it useful for more than hiring:
 | Workflow | What it does |
 |----------|---------------|
 | `evaluate` | Score a role, client brief, or opportunity against your targets |
-| `scan` | Search boards, ATS portals, and tracked companies for new leads |
+| `scan` | Search job boards, freelance sources, communities, and tracked targets for new leads |
 | `pdf` | Generate a tailored resume or one-page profile |
 | `project` | Decide whether a side project is worth building |
 | `training` | Evaluate a course or certification by real ROI |
@@ -68,6 +68,9 @@ modes/_profile.md
 portals.yml
 cv.md
 ```
+
+`portals.yml` now acts as a multi-source intake config for roles, freelance
+briefs, collaboration leads, and learning bets.
 
 Useful checks:
 

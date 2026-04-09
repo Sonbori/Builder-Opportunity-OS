@@ -21,7 +21,6 @@ title_filter:
     - "Junior"
     - "Sales"
     - "Manual QA"
-    - "PHP"
     - "WordPress"
     - "SAP"
     - "Oracle"
@@ -32,61 +31,89 @@ title_filter:
 
 search_queries:
   - name: Wanted Data Roles
+    type: full_time
+    channel: web_search
     query: 'site:wanted.co.kr/wd "Data Engineer" OR "Analytics Engineer" OR "Data Platform"'
     enabled: true
 
-  - name: Wanted Automation Roles
-    query: 'site:wanted.co.kr/wd "Python Automation" OR "Automation Engineer" OR "Workflow"'
-    enabled: true
-
-  - name: Jumpit Data Roles
-    query: 'site:jumpit.saramin.co.kr "Data Engineer" OR "Data Platform" OR "Backend Data"'
-    enabled: true
-
   - name: Jumpit AI Roles
+    type: full_time
+    channel: web_search
     query: 'site:jumpit.saramin.co.kr "AI Engineer" OR "MLOps" OR "LLMOps"'
     enabled: true
 
-  - name: Ashby Automation
-    query: 'site:jobs.ashbyhq.com "Automation Engineer" OR "Data Engineer" OR "Applied AI" remote'
+  - name: Global Remote Data Infra
+    type: full_time
+    channel: web_search
+    query: 'site:job-boards.greenhouse.io OR site:jobs.ashbyhq.com "Data Engineer" OR "Platform Engineer" remote'
     enabled: true
 
-  - name: Greenhouse Data Infra
-    query: 'site:job-boards.greenhouse.io OR site:boards.greenhouse.io "Data Engineer" OR "Platform Engineer" remote'
+  - name: Freelance Automation Leads
+    type: freelance
+    channel: web_search
+    query: '"ecommerce automation" OR "Python automation" freelance brief'
     enabled: true
 
-tracked_companies:
+tracked_targets:
   - name: Toss
-    careers_url: https://toss.im/career/jobs
+    type: full_time
+    channel: careers_page
+    source_url: https://toss.im/career/jobs
     enabled: true
 
   - name: Danggeun
-    careers_url: https://about.daangn.com/jobs/
-    enabled: true
-
-  - name: Kurly
-    careers_url: https://www.kurlycorp.com/careers
-    enabled: true
-
-  - name: Wantedlab
-    careers_url: https://www.wantedlab.com/careers
+    type: full_time
+    channel: careers_page
+    source_url: https://about.daangn.com/jobs/
     enabled: true
 
   - name: Vercel
-    careers_url: https://job-boards.greenhouse.io/vercel
+    type: full_time
+    channel: api
+    source_url: https://job-boards.greenhouse.io/vercel
     api: https://boards-api.greenhouse.io/v1/boards/vercel/jobs
     enabled: true
 
   - name: Supabase
-    careers_url: https://jobs.ashbyhq.com/supabase
+    type: full_time
+    channel: careers_page
+    source_url: https://jobs.ashbyhq.com/supabase
     enabled: true
 
-  - name: dbt Labs
-    careers_url: https://job-boards.greenhouse.io/dbtlabsinc
-    api: https://boards-api.greenhouse.io/v1/boards/dbtlabsinc/jobs
+  - name: Kmong
+    type: freelance
+    channel: manual_board
+    source_url: https://kmong.com/
+    notes: Track briefs related to ecommerce automation, reporting, and office workflow tools.
     enabled: true
 
-  - name: Astronomer
-    careers_url: https://job-boards.greenhouse.io/astronomer
-    api: https://boards-api.greenhouse.io/v1/boards/astronomer/jobs
+  - name: GitHub Open Source
+    type: collaboration
+    channel: watchlist
+    source_url: https://github.com/Sonbori
+    notes: Watch for issues, collab requests, and contribution paths that compound public proof.
     enabled: true
+
+manual_sources:
+  - name: Client DM Inbox
+    type: freelance
+    channel: manual_board
+    cadence: daily
+    notes: Capture any inbound brief that can turn into a scoped proposal within 24 hours.
+
+  - name: Hackathons and Builder Communities
+    type: collaboration
+    channel: community
+    cadence: weekly
+    notes: Track hackathons, community collabs, and startup builder requests worth joining.
+
+learning_sources:
+  - name: Astronomer Academy
+    type: learning
+    source_url: https://www.astronomer.io/docs/learn/
+    notes: Prefer training that can become an Airflow artifact or portfolio proof.
+
+  - name: dbt Learn
+    type: learning
+    source_url: https://docs.getdbt.com/
+    notes: Capture learning bets only when they directly support public proof or role fit.
