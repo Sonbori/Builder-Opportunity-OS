@@ -1,102 +1,40 @@
-# User Profile Context -- career-ops
+# User Profile Context -- Builder Opportunity OS
 
-<!-- ============================================================
-     THIS FILE IS YOURS. It will NEVER be auto-updated.
-     
-     Customize everything here: your archetypes, narrative,
-     proof points, negotiation scripts, location policy.
-     
-     The system reads _shared.md (updatable) first, then this
-     file (your overrides). Your customizations always win.
-     ============================================================ -->
-
-## Your Target Roles
-
-<!-- Replace these with YOUR target roles. Examples:
-     - Senior Backend Engineer / Staff Platform Engineer
-     - AI Product Manager / Technical PM
-     - Data Engineer / ML Engineer
-     - DevOps / SRE / Platform
-     Whatever you're optimizing for. -->
+## Target Archetypes
 
 | Archetype | Thematic axes | What they buy |
 |-----------|---------------|---------------|
-| **AI Platform / LLMOps Engineer** | Evaluation, observability, reliability, pipelines | Someone who puts AI in production with metrics |
-| **Agentic Workflows / Automation** | HITL, tooling, orchestration, multi-agent | Someone who builds reliable agent systems |
-| **Technical AI Product Manager** | GenAI/Agents, PRDs, discovery, delivery | Someone who translates business to AI product |
-| **AI Solutions Architect** | Hyperautomation, enterprise, integrations | Someone who designs end-to-end AI architectures |
-| **AI Forward Deployed Engineer** | Client-facing, fast delivery, prototyping | Someone who delivers AI solutions to clients fast |
-| **AI Transformation Lead** | Change management, adoption, org enablement | Someone who leads AI transformation in an org |
+| **Data Engineer** | pipelines, orchestration, warehousing, analytics | A builder who can move data from source to value |
+| **Python Automation Engineer** | workflow automation, tooling, integrations | A builder who saves teams time through software |
+| **AI / LLMOps Engineer** | evals, orchestration, prompt pipelines, observability | A builder who can make AI systems usable and reliable |
+| **Freelance Automation Builder** | scoping, delivery speed, ROI | A builder who can solve business pain quickly |
+| **Open Source / Collaboration Builder** | demos, shipping, communication | A builder who contributes visible proof of work |
 
-## Your Adaptive Framing
+## Adaptive Framing
 
-<!-- Map YOUR projects to each archetype. Example:
-     | Platform / LLMOps | My monitoring dashboard project | article-digest.md |
-     | Agentic | My chatbot with HITL escalation | cv.md section 3 | -->
+| If the opportunity is... | Emphasize about you... | Proof point sources |
+|--------------------------|------------------------|---------------------|
+| Data Engineer | pipeline design, batch + stream thinking, data product mindset | `cv.md` + `article-digest.md` |
+| Python Automation Engineer | end-to-end scripting, internal tools, workflow improvement | `cv.md` + `article-digest.md` |
+| AI / LLMOps Engineer | AI-assisted delivery, tool use, orchestration, evaluation mindset | `cv.md` + `article-digest.md` |
+| Freelance Automation Builder | speed, clarity, business-first scope, practical outcomes | `article-digest.md` |
+| Collaboration / Open Source | public proof, initiative, shipping velocity, self-directed learning | `article-digest.md` + GitHub |
 
-| If the role is... | Emphasize about you... | Proof point sources |
-|-------------------|------------------------|---------------------|
-| Platform / LLMOps | Production systems builder, observability, evals | article-digest.md + cv.md |
-| Agentic / Automation | Multi-agent orchestration, HITL, reliability | article-digest.md + cv.md |
-| Technical AI PM | Product discovery, PRDs, metrics | cv.md + article-digest.md |
-| Solutions Architect | System design, integrations, enterprise-ready | article-digest.md + cv.md |
-| Forward Deployed Engineer | Fast delivery, client-facing, prototype to prod | cv.md + article-digest.md |
-| AI Transformation Lead | Change management, team enablement, adoption | cv.md + article-digest.md |
+## Cross-cutting Advantage
 
-## Your Exit Narrative
+Frame the profile as:
 
-<!-- Replace with YOUR story. This frames everything. -->
+**A rapid builder who combines Python, data systems, and AI-assisted execution
+to turn ideas into working systems fast.**
 
-Use the candidate's exit story from `config/profile.yml` to frame ALL content:
-- **In PDF Summaries:** Bridge from past to future
-- **In STAR stories:** Reference proof points from article-digest.md
-- **In Draft Answers:** The transition narrative appears in the first response
+## Negotiation / Proposal Notes
 
-## Your Cross-cutting Advantage
+- Full-time roles: anchor on growth, ownership, and technical scope.
+- Freelance: anchor on problem clarity, delivery scope, and measurable value.
+- Side projects: anchor on proof, demo value, and speed to MVP.
 
-<!-- What's your "signature move"? What do you do that others can't? -->
+## Remote Policy
 
-Frame profile as **"Technical builder with real-world proof"** that adapts framing to the role.
-
-## Your Portfolio / Demo
-
-<!-- If you have a live demo, dashboard, or public project:
-     url: https://yoursite.dev/demo
-     password: demo-2026
-     when_to_share: "LLMOps, AI Platform roles" -->
-
-If you have a live demo/dashboard (check profile.yml), offer access in applications for relevant roles.
-
-## Your Comp Targets
-
-<!-- Research comp ranges for YOUR target roles -->
-
-**General guidance:**
-- Use WebSearch for current market data (Glassdoor, Levels.fyi, Blind)
-- Frame by role title, not by skills
-- Contractor rates are typically 30-50% higher than employee base
-
-## Your Negotiation Scripts
-
-<!-- Adapt to YOUR situation, currency, location -->
-
-**Salary expectations:**
-> "Based on market data for this role, I'm targeting [RANGE from profile.yml]. I'm flexible on structure -- what matters is the total package and the opportunity."
-
-**Geographic discount pushback:**
-> "The roles I'm competitive for are output-based, not location-based. My track record doesn't change based on postal code."
-
-**When offered below target:**
-> "I'm comparing with opportunities in the [higher range]. I'm drawn to [company] because of [reason]. Can we explore [target]?"
-
-## Your Location Policy
-
-<!-- Adapt to YOUR situation -->
-
-**In forms:**
-- Follow your actual availability from profile.yml
-- Specify timezone overlap in free-text fields
-
-**In evaluations (scoring):**
-- Remote dimension for hybrid outside your country: score **3.0** (not 1.0)
-- Only score 1.0 if JD says "must be on-site 4-5 days/week, no exceptions"
+- Prefer remote or hybrid.
+- Do not hard-reject hybrid in Seoul or the capital region.
+- Hard reject rigid roles that require frequent full-time on-site presence.

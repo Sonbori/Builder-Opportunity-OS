@@ -1,71 +1,80 @@
-# Career-Ops Profile Configuration
-# Copy this file to config/profile.yml and fill in your details.
-# This is the single source of truth for your personal data across all modes.
+# Builder Opportunity OS profile template
 
 candidate:
-  full_name: "Jane Smith"
-  email: "jane@example.com"
-  phone: "+1-555-0123"
-  location: "San Francisco, CA"
-  linkedin: "linkedin.com/in/janesmith"
-  portfolio_url: "https://janesmith.dev"
-  github: "github.com/janesmith"
-  twitter: "https://x.com/janesmith"
-  # (Optional) Canva resume design ID for visual CV generation via /career-ops pdf.
-  # Find it in your Canva design URL: https://www.canva.com/design/DAxxxxxxx/...
-  # The ID starts with "D" and is 11 characters long.
-  # canva_resume_design_id: "DAxxxxxxxxx"
+  full_name: "Your Name"
+  email: "you@example.com"
+  phone: "+82-10-0000-0000"
+  location: "Seoul, KR"
+  linkedin: "https://linkedin.com/in/your-handle"
+  portfolio_url: "https://your-portfolio.example.com"
+  github: "https://github.com/your-handle"
+  primary_language: "ko"
+  working_languages: ["ko", "en"]
 
 target_roles:
-  # Your North Star roles — what you're optimizing for
   primary:
-    - "Senior AI Engineer"
-    - "Staff ML Engineer"
-  # Archetypes help the evaluation system score fit
-  archetypes:
-    - name: "AI/ML Engineer"
-      level: "Senior/Staff"
-      fit: "primary"        # primary = dream role, secondary = good fit, adjacent = stretch
-    - name: "AI Product Manager"
-      level: "Senior"
-      fit: "secondary"
-    - name: "Solutions Architect"
-      level: "Mid-Senior"
-      fit: "adjacent"
+    - "Data Engineer"
+    - "Python Automation Engineer"
+    - "AI / LLMOps Engineer"
+  secondary:
+    - "Analytics Engineer"
+    - "Founding Data Engineer"
+    - "Freelance Automation Builder"
+
+opportunity_types:
+  enabled:
+    - "full_time"
+    - "freelance"
+    - "side_project"
+    - "learning"
+    - "collaboration"
 
 narrative:
-  # Your professional headline (1 line)
-  headline: "ML Engineer turned AI product builder"
-  # Your exit story — what makes you unique
-  exit_story: "Built and sold my SaaS after 5 years. Now focused on applied AI at scale."
-  # Your top 3-5 superpowers
+  headline: "Rapid builder for data, automation, and AI workflows"
+  exit_story: "Started from the fundamentals, then learned to ship real systems quickly by combining Python, product thinking, and AI-assisted execution."
   superpowers:
-    - "End-to-end ML pipelines"
-    - "Fast prototyping (idea to prod in 2 weeks)"
-    - "Cross-functional communication"
-  # Proof points — projects, articles, case studies with measurable impact
+    - "Fast end-to-end prototyping"
+    - "Python automation and workflow design"
+    - "Data pipeline implementation"
+    - "Turning ambiguity into a working demo"
   proof_points:
-    - name: "Project Alpha"
-      url: "https://janesmith.dev/project-alpha"
-      hero_metric: "Reduced inference latency 40%"
-    - name: "Open Source Tool"
-      url: "https://github.com/janesmith/tool"
-      hero_metric: "2K+ GitHub stars"
-  # Optional: dashboard/demo URL with credentials
-  # dashboard:
-  #   url: "https://janesmith.dev/demo"
-  #   password: "demo-2026"
+    - name: "DE Analytics Platform"
+      url: "https://github.com/your-handle"
+      hero_metric: "Built a portfolio-grade analytics platform in 8 weeks"
+    - name: "Freelance Automation Work"
+      url: "https://github.com/your-handle"
+      hero_metric: "Built automation products for real workflows"
+
+priorities:
+  scoring_order:
+    - "stack_fit_and_growth"
+    - "comp_or_revenue"
+    - "remote_fit"
+    - "impact_and_signal"
+    - "speed_to_win"
+    - "risk"
 
 compensation:
-  target_range: "$150K-200K"     # Your target total comp
-  currency: "USD"
-  minimum: "$120K"               # Walk-away number
-  location_flexibility: "Remote preferred, 1 week/month on-site possible"
+  target_range: "Define your full-time target"
+  minimum: "Define your walk-away number"
+  currency: "KRW"
+
+freelance:
+  preferred_rate: "Define your target project fee or hourly rate"
+  preferred_scope: "Automation, internal tools, data workflow setup"
 
 location:
-  country: "United States"
-  city: "San Francisco"
-  timezone: "PST"
-  visa_status: "No sponsorship needed"
-  # For remote roles outside your country:
-  # onsite_availability: "1 week/month in any city"
+  country: "Korea"
+  city: "Seoul"
+  timezone: "Asia/Seoul"
+  work_mode: "Remote or hybrid"
+
+filters:
+  preferred_company_types:
+    - "fast-moving startup"
+    - "technical product team"
+    - "builder culture"
+  avoid:
+    - "legacy maintenance-only roles"
+    - "non-technical operations roles"
+    - "rigid on-site only roles"

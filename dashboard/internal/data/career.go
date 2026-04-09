@@ -1,4 +1,4 @@
-package data
+﻿package data
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/santifer/career-ops/dashboard/internal/model"
+	"github.com/Sonbori/Builder-Opportunity-OS/dashboard/internal/model"
 )
 
 var (
@@ -450,7 +450,7 @@ func ComputeMetrics(apps []model.CareerApplication) model.PipelineMetrics {
 		if app.HasPDF {
 			m.WithPDF++
 		}
-		if status != "skip" && status != "rejected" && status != "discarded" {
+		if status != "skip" && status != "rejected" && status != "parked" {
 			m.Actionable++
 		}
 	}
@@ -465,32 +465,30 @@ func ComputeMetrics(apps []model.CareerApplication) model.PipelineMetrics {
 // NormalizeStatus normalizes raw status text to a canonical form.
 // Aliases match states.yml -- keep in sync with career-ops/states.yml
 func NormalizeStatus(raw string) string {
-	// Strip markdown bold and trailing dates
 	s := strings.ReplaceAll(raw, "**", "")
 	s = strings.TrimSpace(strings.ToLower(s))
-	// Strip trailing date (e.g., "aplicado 2026-03-12")
 	if idx := strings.Index(s, " 202"); idx > 0 {
 		s = strings.TrimSpace(s[:idx])
 	}
 
 	switch {
-	// Most restrictive first — accepts both English and Spanish
-	case strings.Contains(s, "no aplicar") || strings.Contains(s, "no_aplicar") || s == "skip" || strings.Contains(s, "geo blocker"):
+	case strings.Contains(s, "skip") || strings.Contains(s, "no_fit") || strings.Contains(s, "no_apply"):
 		return "skip"
-	case strings.Contains(s, "interview") || strings.Contains(s, "entrevista"):
-		return "interview"
-	case s == "offer" || strings.Contains(s, "oferta"):
-		return "offer"
-	case strings.Contains(s, "responded") || strings.Contains(s, "respondido"):
-		return "responded"
-	case strings.Contains(s, "applied") || strings.Contains(s, "aplicado") || s == "enviada" || s == "aplicada" || s == "sent":
+	case strings.Contains(s, "won") || strings.Contains(s, "offer") || strings.Contains(s, "accepted"):
+		return "won"
+	case strings.Contains(s, "interview"):
+		return "interviewing"
+	case strings.Contains(s, "proposed") || strings.Contains(s, "proposal") || strings.Contains(s, "quoted") || strings.Contains(s, "scope_sent"):
+		return "proposed"
+	case strings.Contains(s, "pursuing") || strings.Contains(s, "responded") || strings.Contains(s, "contacted") || strings.Contains(s, "followup"):
+		return "pursuing"
+	case strings.Contains(s, "applied") || strings.Contains(s, "submitted") || s == "sent":
 		return "applied"
-	case strings.Contains(s, "rejected") || strings.Contains(s, "rechazado") || s == "rechazada":
+	case strings.Contains(s, "rejected") || strings.Contains(s, "lost") || strings.Contains(s, "declined"):
 		return "rejected"
-	case strings.Contains(s, "discarded") || strings.Contains(s, "descartado") || s == "descartada" || s == "cerrada" || s == "cancelada" ||
-		strings.HasPrefix(s, "duplicado") || strings.HasPrefix(s, "dup"):
-		return "discarded"
-	case strings.Contains(s, "evaluated") || strings.Contains(s, "evaluada") || s == "condicional" || s == "hold" || s == "monitor" || s == "evaluar" || s == "verificar":
+	case strings.Contains(s, "parked") || strings.Contains(s, "hold") || strings.Contains(s, "later") || strings.Contains(s, "backlog") || strings.Contains(s, "discarded"):
+		return "parked"
+	case strings.Contains(s, "evaluated") || strings.Contains(s, "reviewed") || strings.Contains(s, "scored"):
 		return "evaluated"
 	default:
 		return s
@@ -586,23 +584,26 @@ func cleanTableCell(s string) string {
 // StatusPriority returns the sort priority for a status (lower = higher priority).
 func StatusPriority(status string) int {
 	switch NormalizeStatus(status) {
-	case "interview":
+	case "won":
 		return 0
-	case "offer":
+	case "interviewing":
 		return 1
-	case "responded":
+	case "pursuing":
 		return 2
 	case "applied":
 		return 3
-	case "evaluated":
+	case "proposed":
 		return 4
-	case "skip":
+	case "evaluated":
 		return 5
-	case "rejected":
+	case "parked":
 		return 6
-	case "discarded":
+	case "rejected":
 		return 7
-	default:
+	case "skip":
 		return 8
+	default:
+		return 9
 	}
 }
+

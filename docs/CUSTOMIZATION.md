@@ -1,76 +1,40 @@
 # Customization Guide
 
-## Profile (config/profile.yml)
+## Primary Files
 
-This is the single source of truth for your identity. All modes read from here.
+### `config/profile.yml`
 
-Key sections:
-- **candidate**: Name, email, phone, location, LinkedIn, portfolio
-- **target_roles**: Your North Star roles and archetypes
-- **narrative**: Your headline, exit story, superpowers, proof points
-- **compensation**: Target range, minimum, currency
-- **location**: Country, timezone, visa status, on-site availability
+Use this file for:
 
-## Target Roles (modes/_shared.md)
+- identity and public links
+- target roles
+- opportunity priorities
+- compensation targets
+- freelance preferences
+- work location constraints
 
-The archetype table in `_shared.md` determines how offers are scored and CVs are framed. Edit the table to match YOUR career targets:
+### `modes/_profile.md`
 
-```markdown
-| Archetype | Thematic axes | What they buy |
-|-----------|---------------|---------------|
-| **Your Role 1** | key skills | what they need |
-| **Your Role 2** | key skills | what they need |
-```
+Use this file for:
 
-Also update the "Adaptive Framing" table to map YOUR specific projects to each archetype.
+- archetype-specific framing
+- proof mapping
+- negotiation language
+- proposal positioning
+- your cross-cutting advantage
 
-## Portals (portals.yml)
+### `portals.yml`
 
-Copy from `templates/portals.example.yml` and customize:
+Use this file for:
 
-1. **title_filter.positive**: Keywords matching your target roles
-2. **title_filter.negative**: Tech stacks or domains to exclude
-3. **search_queries**: WebSearch queries for job boards (Ashby, Greenhouse, Lever)
-4. **tracked_companies**: Companies to check directly
+- search keywords
+- tracked companies
+- board-specific discovery queries
 
-## CV Template (templates/cv-template.html)
+## Recommended Customizations
 
-The HTML template uses these design tokens:
-- **Fonts**: Space Grotesk (headings) + DM Sans (body) -- self-hosted in `fonts/`
-- **Colors**: Cyan primary (`hsl(187,74%,32%)`) + Purple accent (`hsl(270,70%,45%)`)
-- **Layout**: Single-column, ATS-optimized
-
-To customize fonts/colors, edit the CSS in the template. Update font files in `fonts/` if switching fonts.
-
-## Negotiation Scripts (modes/_shared.md)
-
-The negotiation section provides frameworks for salary discussions. Replace the example scripts with your own:
-- Target ranges
-- Geographic arbitrage strategy
-- Pushback responses
-
-## Hooks (Optional)
-
-Career-ops can integrate with external systems via Claude Code hooks. Example hooks:
-
-```json
-{
-  "hooks": {
-    "SessionStart": [{
-      "hooks": [{
-        "type": "command",
-        "command": "echo 'Career-ops session started'"
-      }]
-    }]
-  }
-}
-```
-
-Save hooks in `.claude/settings.json`.
-
-## States (templates/states.yml)
-
-The canonical states rarely need changing. If you add new states, update:
-1. `templates/states.yml`
-2. `normalize-statuses.mjs` (alias mappings)
-3. `modes/_shared.md` (any references)
+1. Add concrete portfolio links and demo URLs.
+2. Replace draft CV bullets with final wording from your real CV.
+3. Keep the tracker statuses short and canonical.
+4. Use the notes field to record why an opportunity matters.
+5. Adjust search queries as your target changes.

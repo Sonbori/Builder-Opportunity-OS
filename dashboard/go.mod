@@ -1,4 +1,4 @@
-module github.com/santifer/career-ops/dashboard
+module github.com/Sonbori/Builder-Opportunity-OS/dashboard
 
 go 1.24.2
 

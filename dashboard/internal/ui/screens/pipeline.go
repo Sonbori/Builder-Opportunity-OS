@@ -1,4 +1,4 @@
-package screens
+﻿package screens
 
 import (
 	"fmt"
@@ -9,9 +9,9 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/santifer/career-ops/dashboard/internal/data"
-	"github.com/santifer/career-ops/dashboard/internal/model"
-	"github.com/santifer/career-ops/dashboard/internal/theme"
+	"github.com/Sonbori/Builder-Opportunity-OS/dashboard/internal/data"
+	"github.com/Sonbori/Builder-Opportunity-OS/dashboard/internal/model"
+	"github.com/Sonbori/Builder-Opportunity-OS/dashboard/internal/theme"
 )
 
 // PipelineClosedMsg is emitted when the pipeline screen is dismissed.
@@ -60,11 +60,13 @@ const (
 // Filter modes
 const (
 	filterAll       = "all"
+	filterFocus     = "focus"
 	filterEvaluated = "evaluated"
+	filterPursuing  = "pursuing"
 	filterApplied   = "applied"
-	filterInterview = "interview"
+	filterInterview = "interviewing"
+	filterWon       = "won"
 	filterSkip      = "skip"
-	filterTop       = "top"
 )
 
 type pipelineTab struct {
@@ -74,19 +76,21 @@ type pipelineTab struct {
 
 var pipelineTabs = []pipelineTab{
 	{filterAll, "ALL"},
+	{filterFocus, "FOCUS"},
 	{filterEvaluated, "EVALUATED"},
+	{filterPursuing, "PURSUING"},
 	{filterApplied, "APPLIED"},
-	{filterInterview, "INTERVIEW"},
-	{filterTop, "TOP ≥4"},
+	{filterInterview, "INTERVIEWING"},
+	{filterWon, "WON"},
 	{filterSkip, "SKIP"},
 }
 
 var sortCycle = []string{sortScore, sortDate, sortCompany, sortStatus}
 
-var statusOptions = []string{"Evaluated", "Applied", "Responded", "Interview", "Offer", "Rejected", "Discarded", "SKIP"}
+var statusOptions = []string{"Evaluated", "Pursuing", "Proposed", "Applied", "Interviewing", "Won", "Parked", "Rejected", "SKIP"}
 
 // statusGroupOrder defines display order for grouped view.
-var statusGroupOrder = []string{"interview", "offer", "responded", "applied", "evaluated", "skip", "rejected", "discarded"}
+var statusGroupOrder = []string{"won", "interviewing", "pursuing", "applied", "proposed", "evaluated", "parked", "rejected", "skip"}
 
 // PipelineModel implements the career pipeline dashboard screen.
 type PipelineModel struct {
@@ -248,7 +252,7 @@ func (m PipelineModel) handleKey(msg tea.KeyMsg) (PipelineModel, tea.Cmd) {
 	case "enter":
 		if app, ok := m.CurrentApp(); ok && app.ReportPath != "" {
 			fullPath := filepath.Join(m.careerOpsPath, app.ReportPath)
-			title := fmt.Sprintf("%s — %s", app.Company, app.Role)
+			title := fmt.Sprintf("%s ??%s", app.Company, app.Role)
 			jobURL := app.JobURL
 			return m, func() tea.Msg {
 				return PipelineOpenReportMsg{Path: fullPath, Title: title, JobURL: jobURL}
@@ -342,8 +346,8 @@ func (m *PipelineModel) applyFilterAndSort() {
 		switch currentFilter {
 		case filterAll:
 			filtered = append(filtered, app)
-		case filterTop:
-			if app.Score >= 4.0 && norm != "skip" {
+		case filterFocus:
+			if norm == "won" || norm == "interviewing" || norm == "pursuing" || norm == "applied" || norm == "proposed" || (norm == "evaluated" && app.Score >= 4.0) {
 				filtered = append(filtered, app)
 			}
 		default:
@@ -494,9 +498,9 @@ func (m PipelineModel) renderHeader() string {
 
 	right := lipgloss.NewStyle().Foreground(m.theme.Subtext)
 	avg := fmt.Sprintf("%.1f", m.metrics.AvgScore)
-	info := right.Render(fmt.Sprintf("%d offers | Avg %s/5", m.metrics.Total, avg))
+	info := right.Render(fmt.Sprintf("%d opportunities | Avg %s/5", m.metrics.Total, avg))
 
-	title := lipgloss.NewStyle().Bold(true).Foreground(m.theme.Blue).Render("CAREER PIPELINE")
+	title := lipgloss.NewStyle().Bold(true).Foreground(m.theme.Blue).Render("OPPORTUNITY PIPELINE")
 	gap := m.width - lipgloss.Width(title) - lipgloss.Width(info) - 4
 	if gap < 1 {
 		gap = 1
@@ -520,13 +524,13 @@ func (m PipelineModel) renderTabs() string {
 				Foreground(m.theme.Blue).
 				Padding(0, 0)
 			tabs = append(tabs, style.Render(label))
-			underParts = append(underParts, strings.Repeat("━", lipgloss.Width(label)))
+			underParts = append(underParts, strings.Repeat("-", lipgloss.Width(label)))
 		} else {
 			style := lipgloss.NewStyle().
 				Foreground(m.theme.Subtext).
 				Padding(0, 0)
 			tabs = append(tabs, style.Render(label))
-			underParts = append(underParts, strings.Repeat("─", lipgloss.Width(label)))
+			underParts = append(underParts, strings.Repeat("?", lipgloss.Width(label)))
 		}
 	}
 
@@ -544,8 +548,8 @@ func (m PipelineModel) countForFilter(filter string) int {
 		switch filter {
 		case filterAll:
 			count++
-		case filterTop:
-			if app.Score >= 4.0 && norm != "skip" {
+		case filterFocus:
+			if norm == "won" || norm == "interviewing" || norm == "pursuing" || norm == "applied" || norm == "proposed" || (norm == "evaluated" && app.Score >= 4.0) {
 				count++
 			}
 		default:
@@ -597,7 +601,7 @@ func (m PipelineModel) renderBody() string {
 		emptyStyle := lipgloss.NewStyle().
 			Foreground(m.theme.Subtext).
 			Padding(1, 2)
-		return emptyStyle.Render("No offers match this filter")
+		return emptyStyle.Render("No opportunities match this filter")
 	}
 
 	var lines []string
@@ -614,9 +618,9 @@ func (m PipelineModel) renderBody() string {
 				Bold(true).
 				Foreground(m.theme.Subtext)
 			lines = append(lines, padStyle.Render(
-				headerStyle.Render(fmt.Sprintf("── %s (%d) %s",
+				headerStyle.Render(fmt.Sprintf("?? %s (%d) %s",
 					strings.ToUpper(statusLabel(norm)), count,
-					strings.Repeat("─", max(0, m.width-30-len(statusLabel(norm)))))),
+					strings.Repeat("?", max(0, m.width-30-len(statusLabel(norm)))))),
 			))
 			prevStatus = norm
 		}
@@ -705,7 +709,7 @@ func (m PipelineModel) renderPreview() string {
 	divider := lipgloss.NewStyle().Foreground(m.theme.Overlay)
 
 	var lines []string
-	lines = append(lines, padStyle.Render(divider.Render(strings.Repeat("─", m.width-4))))
+	lines = append(lines, padStyle.Render(divider.Render(strings.Repeat("?", m.width-4))))
 
 	labelStyle := lipgloss.NewStyle().Foreground(m.theme.Sky).Bold(true)
 	valueStyle := lipgloss.NewStyle().Foreground(m.theme.Text)
@@ -755,15 +759,15 @@ func (m PipelineModel) renderHelp() string {
 
 	if m.statusPicker {
 		return style.Render(
-			keyStyle.Render("↑↓") + descStyle.Render(" navigate  ") +
+			keyStyle.Render("?묅넃") + descStyle.Render(" navigate  ") +
 				keyStyle.Render("Enter") + descStyle.Render(" confirm  ") +
 				keyStyle.Render("Esc") + descStyle.Render(" cancel"))
 	}
 
-	brand := lipgloss.NewStyle().Foreground(m.theme.Overlay).Render("career-ops by santifer.io")
+	brand := lipgloss.NewStyle().Foreground(m.theme.Overlay).Render("Builder Opportunity OS")
 
-	keys := keyStyle.Render("↑↓") + descStyle.Render(" nav  ") +
-		keyStyle.Render("←→") + descStyle.Render(" tabs  ") +
+	keys := keyStyle.Render("?묅넃") + descStyle.Render(" nav  ") +
+		keyStyle.Render("?먥넂") + descStyle.Render(" tabs  ") +
 		keyStyle.Render("s") + descStyle.Render(" sort  ") +
 		keyStyle.Render("Enter") + descStyle.Render(" report  ") +
 		keyStyle.Render("o") + descStyle.Render(" open URL  ") +
@@ -826,14 +830,15 @@ func (m PipelineModel) scoreStyle(score float64) lipgloss.Style {
 
 func (m PipelineModel) statusColorMap() map[string]lipgloss.Color {
 	return map[string]lipgloss.Color{
-		"interview": m.theme.Green,
-		"offer":     m.theme.Green,
-		"applied":   m.theme.Sky,
-		"responded": m.theme.Blue,
-		"evaluated": m.theme.Text,
-		"skip":      m.theme.Red,
-		"rejected":  m.theme.Subtext,
-		"discarded": m.theme.Subtext,
+		"won":          m.theme.Green,
+		"interviewing": m.theme.Green,
+		"pursuing":     m.theme.Blue,
+		"applied":      m.theme.Sky,
+		"proposed":     m.theme.Yellow,
+		"evaluated":    m.theme.Text,
+		"parked":       m.theme.Subtext,
+		"rejected":     m.theme.Subtext,
+		"skip":         m.theme.Red,
 	}
 }
 
@@ -849,23 +854,30 @@ func (m PipelineModel) countByNormStatus(status string) int {
 
 func statusLabel(norm string) string {
 	switch norm {
-	case "interview":
-		return "Interview"
-	case "offer":
-		return "Offer"
-	case "responded":
-		return "Responded"
+	case "won":
+		return "Won"
+	case "interviewing":
+		return "Interviewing"
+	case "pursuing":
+		return "Pursuing"
 	case "applied":
 		return "Applied"
+	case "proposed":
+		return "Proposed"
 	case "evaluated":
 		return "Evaluated"
+	case "parked":
+		return "Parked"
 	case "skip":
 		return "Skip"
 	case "rejected":
 		return "Rejected"
-	case "discarded":
-		return "Discarded"
 	default:
 		return norm
 	}
 }
+
+
+
+
+
