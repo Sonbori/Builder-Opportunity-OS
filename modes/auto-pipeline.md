@@ -1,67 +1,89 @@
-# Modo: auto-pipeline — Pipeline Completo Automático
+# Mode: auto-pipeline
 
-Cuando el usuario pega un JD (texto o URL) sin sub-comando explícito, ejecutar TODO el pipeline en secuencia:
+Use this mode when the user pastes an opportunity without specifying a
+sub-command.
 
-## Paso 0 — Extraer JD
+The goal is to move from raw input to a decision and the right artifact with
+minimal extra prompting.
 
-Si el input es una **URL** (no texto de JD pegado), seguir esta estrategia para extraer el contenido:
+## Step 0. Capture the Opportunity
 
-**Orden de prioridad:**
+If the input is a URL:
 
-1. **Playwright (preferido):** La mayoría de portales de empleo (Lever, Ashby, Greenhouse, Workday) son SPAs. Usar `browser_navigate` + `browser_snapshot` para renderizar y leer el JD.
-2. **WebFetch (fallback):** Para páginas estáticas (ZipRecruiter, WeLoveProduct, company career pages).
-3. **WebSearch (último recurso):** Buscar título del rol + empresa en portales secundarios que indexan el JD en HTML estático.
+1. Try Playwright first for live rendered pages.
+2. Fall back to WebFetch for static content.
+3. Use WebSearch only as a last resort for missing context.
 
-**Si ningún método funciona:** Pedir al candidato que pegue el JD manualmente o comparta un screenshot.
+If the input is pasted text:
 
-**Si el input es texto de JD** (no URL): usar directamente, sin necesidad de fetch.
+- use it directly
 
-## Paso 1 — Evaluación A-F
-Ejecutar exactamente igual que el modo `oferta` (leer `modes/oferta.md` para todos los bloques A-F).
+If the input is too thin to evaluate:
 
-## Paso 2 — Guardar Report .md
-Guardar la evaluación completa en `reports/{###}-{company-slug}-{YYYY-MM-DD}.md` (ver formato en `modes/oferta.md`).
+- ask only for the minimum missing context
 
-## Paso 3 — Generar PDF
-Ejecutar el pipeline completo de `pdf` (leer `modes/pdf.md`).
+## Step 1. Classify
 
-## Paso 4 — Draft Application Answers (solo si score >= 4.5)
+Determine:
 
-Si el score final es >= 4.5, generar borrador de respuestas para el formulario de aplicación:
+- opportunity type
+- source
+- likely archetype
+- likely artifact type
 
-1. **Extraer preguntas del formulario**: Usar Playwright para navegar al formulario y hacer snapshot. Si no se pueden extraer, usar las preguntas genéricas.
-2. **Generar respuestas** siguiendo el tono (ver abajo).
-3. **Guardar en el report** como sección `## G) Draft Application Answers`.
+## Step 2. Evaluate
 
-### Preguntas genéricas (usar si no se pueden extraer del formulario)
+Run the full `evaluate` mode from `modes/oferta.md`.
 
-- Why are you interested in this role?
-- Why do you want to work at [Company]?
-- Tell us about a relevant project or achievement
-- What makes you a good fit for this position?
-- How did you hear about this role?
+## Step 3. Save the Main Report
 
-### Tono para Form Answers
+If the user is using the system operationally, save the evaluation report in
+`reports/`.
 
-**Posición: "I'm choosing you."** el candidato tiene opciones y está eligiendo esta empresa por razones concretas.
+## Step 4. Generate the Best Artifact
 
-**Reglas de tono:**
-- **Confiado sin arrogancia**: "I've spent the past year building production AI agent systems — your role is where I want to apply that experience next"
-- **Selectivo sin soberbia**: "I've been intentional about finding a team where I can contribute meaningfully from day one"
-- **Específico y concreto**: Siempre referenciar algo REAL del JD o de la empresa, y algo REAL de la experiencia del candidato
-- **Directo, sin fluff**: 2-4 frases por respuesta. Sin "I'm passionate about..." ni "I would love the opportunity to..."
-- **El hook es la prueba, no la afirmación**: En vez de "I'm great at X", decir "I built X that does Y"
+Choose the smallest useful next artifact based on type:
 
-**Framework por pregunta:**
-- **Why this role?** → "Your [specific thing] maps directly to [specific thing I built]."
-- **Why this company?** → Mencionar algo concreto sobre la empresa. "I've been using [product] for [time/purpose]."
-- **Relevant experience?** → Un proof point cuantificado. "Built [X] that [metric]. Sold the company in 2025."
-- **Good fit?** → "I sit at the intersection of [A] and [B], which is exactly where this role lives."
-- **How did you hear?** → Honesto: "Found through [portal/scan], evaluated against my criteria, and it scored highest."
+- full-time -> tailored resume or cover letter
+- freelance -> proposal or scoping note
+- side project -> one-pager or MVP plan
+- learning -> sprint plan
+- collaboration -> outreach note
 
-**Idioma**: Siempre en el idioma del JD (EN default). Aplicar `/tech-translate`.
+Do not default to PDF for every opportunity.
 
-## Paso 5 — Actualizar Tracker
-Registrar en `data/applications.md` con todas las columnas incluyendo Report y PDF en ✅.
+## Step 5. Update the Tracker
 
-**Si algún paso falla**, continuar con los siguientes y marcar el paso fallido como pendiente en el tracker.
+Add or update the item in `data/applications.md` with:
+
+- date
+- organization
+- title
+- final score
+- status
+- report path
+- notes with next action
+
+Suggested default statuses:
+
+- strong candidate, not yet acted on -> `Evaluated`
+- actively moving -> `Pursuing`
+- proposal sent -> `Proposed`
+- formal application sent -> `Applied`
+
+## Step 6. Summarize
+
+End with:
+
+1. final score
+2. pursue / park / skip
+3. recommended artifact
+4. exact next action
+
+## Failure Handling
+
+If one step fails:
+
+- keep the pipeline moving where possible
+- mark missing output clearly
+- do not pretend a later step was completed

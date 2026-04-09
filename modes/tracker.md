@@ -1,23 +1,74 @@
-# Modo: tracker — Tracker de Aplicaciones
+# Mode: tracker
 
-Lee y muestra `data/applications.md`.
+This mode reads and manages `data/applications.md`, which now functions as the
+main opportunity tracker.
 
-**Formato del tracker:**
-```markdown
-| # | Fecha | Empresa | Rol | Score | Estado | PDF | Report |
+## Tracker Format
+
+```md
+| # | Date | Company | Role | Score | Status | PDF | Report | Notes |
 ```
 
-Estados posibles: `Evaluada` → `Aplicado` → `Respondido` → `Contacto` → `Entrevista` → `Oferta` / `Rechazada` / `Descartada` / `NO APLICAR`
+Interpretation:
 
-- `Aplicado` = el candidato envió su candidatura
-- `Respondido` = Un recruiter/empresa contactó y el candidato respondió (inbound)
-- `Contacto` = El candidato contactó proactivamente a alguien de la empresa (outbound, ej: LinkedIn power move)
+- `Company` can mean employer, client, community, provider, or `Self`
+- `Role` can mean role title, brief label, project label, or learning item
+- `PDF` means a key artifact exists, not only a resume PDF
 
-Si el usuario pide actualizar un estado, editar la fila correspondiente.
+## Canonical Statuses
 
-Mostrar también estadísticas:
-- Total de aplicaciones
-- Por estado
-- Score promedio
-- % con PDF generado
-- % con report generado
+- `Evaluated`
+- `Pursuing`
+- `Proposed`
+- `Applied`
+- `Interviewing`
+- `Won`
+- `Parked`
+- `Rejected`
+- `SKIP`
+
+## Meaning of Each Status
+
+- `Evaluated` -> scored, no action taken yet
+- `Pursuing` -> active next step in motion
+- `Proposed` -> proposal, quote, or scoped pitch sent
+- `Applied` -> formal application sent
+- `Interviewing` -> active interview or evaluation process
+- `Won` -> converted into a positive outcome
+- `Parked` -> paused intentionally
+- `Rejected` -> closed unsuccessfully
+- `SKIP` -> intentionally not pursuing
+
+## Tracker Responsibilities
+
+When asked to view the tracker:
+
+1. summarize total items
+2. summarize counts by status
+3. summarize average score
+4. identify focus items:
+   - `Pursuing`
+   - `Proposed`
+   - `Applied`
+   - `Interviewing`
+   - high-score `Evaluated`
+
+When asked to update the tracker:
+
+1. update the status only if the new state is clear
+2. keep notes short and useful
+3. preserve the report link
+
+## Recommended Summary Output
+
+Include:
+
+- total opportunity count
+- count by status
+- average score
+- top items that need action now
+
+## Practical Rule
+
+The tracker is not only a history log.
+It is the operational view of what the user should do next.

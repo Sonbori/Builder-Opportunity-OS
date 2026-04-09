@@ -1,157 +1,205 @@
-# Modo: oferta — Evaluación Completa A-F
+# Mode: evaluate
 
-Cuando el candidato pega una oferta (texto o URL), entregar SIEMPRE los 6 bloques:
+Use this mode when the user wants a deep evaluation of a single opportunity.
 
-## Paso 0 — Detección de Arquetipo
+The input may be:
 
-Clasificar la oferta en uno de los 6 arquetipos (ver `_shared.md`). Si es híbrido, indicar los 2 más cercanos. Esto determina:
-- Qué proof points priorizar en bloque B
-- Cómo reescribir el summary en bloque E
-- Qué historias STAR preparar en bloque F
+- job post
+- freelance brief
+- project idea
+- course or certification
+- collaboration lead
 
-## Bloque A — Resumen del Rol
+## Output Structure
 
-Tabla con:
-- Arquetipo detectado
-- Domain (platform/agentic/LLMOps/ML/enterprise)
-- Function (build/consult/manage/deploy)
-- Seniority
-- Remote (full/hybrid/onsite)
-- Team size (si se menciona)
-- TL;DR en 1 frase
+Always produce these sections:
 
-## Bloque B — Match con CV
+## 0. Opportunity Classification
 
-Lee `cv.md`. Crea tabla con cada requisito del JD mapeado a líneas exactas del CV.
+Identify:
 
-**Adaptado al arquetipo:**
-- Si FDE → priorizar proof points de delivery rápida y client-facing
-- Si SA → priorizar diseño de sistemas e integrations
-- Si PM → priorizar product discovery y métricas
-- Si LLMOps → priorizar evals, observability, pipelines
-- Si Agentic → priorizar multi-agent, HITL, orchestration
-- Si Transformation → priorizar change management, adoption, scaling
+- Opportunity type
+- Source
+- Primary archetype
+- Secondary archetype if relevant
+- Recommended artifact
+- One-line summary
 
-Sección de **gaps** con estrategia de mitigación para cada uno. Para cada gap:
-1. ¿Es un hard blocker o un nice-to-have?
-2. ¿Puede el candidato demostrar experiencia adyacente?
-3. ¿Hay un proyecto portfolio que cubra este gap?
-4. Plan de mitigación concreto (frase para cover letter, proyecto rápido, etc.)
+## A. Opportunity Snapshot
 
-## Bloque C — Nivel y Estrategia
+Summarize the opportunity in a compact table:
 
-1. **Nivel detectado** en el JD vs **nivel natural del candidato para ese arquetipo**
-2. **Plan "vender senior sin mentir"**: frases específicas adaptadas al arquetipo, logros concretos a destacar, cómo posicionar la experiencia de founder como ventaja
-3. **Plan "si me downlevelan"**: aceptar si comp es justa, negociar review a 6 meses, criterios de promoción claros
+- organization or client
+- title or label
+- type
+- source
+- urgency
+- work mode
+- estimated upside
+- main unknowns
 
-## Bloque D — Comp y Demanda
+## B. Fit and Proof
 
-Usar WebSearch para:
-- Salarios actuales del rol (Glassdoor, Levels.fyi, Blind)
-- Reputación de compensación de la empresa
-- Tendencia de demanda del rol
+Map the opportunity to the user's profile.
 
-Tabla con datos y fuentes citadas. Si no hay datos, decirlo en vez de inventar.
+Include:
 
-## Bloque E — Plan de Personalización
+- strongest reasons it fits
+- strongest reasons it does not fit
+- relevant proof points from `cv.md` and `article-digest.md`
+- missing proof or gaps
 
-| # | Sección | Estado actual | Cambio propuesto | Por qué |
-|---|---------|---------------|------------------|---------|
-| 1 | Summary | ... | ... | ... |
-| ... | ... | ... | ... | ... |
+For each major gap, say whether it is:
 
-Top 5 cambios al CV + Top 5 cambios a LinkedIn para maximizar match.
+- blocker
+- manageable
+- minor
 
-## Bloque F — Plan de Entrevistas
+## C. Score Breakdown
 
-6-10 historias STAR+R mapeadas a requisitos del JD (STAR + **Reflection**):
+Score all six shared dimensions from `_shared.md` and show:
 
-| # | Requisito del JD | Historia STAR+R | S | T | A | R | Reflection |
-|---|-----------------|-----------------|---|---|---|---|------------|
+| Dimension | Score | Why |
+|-----------|-------|-----|
+| Stack Fit and Skill Growth | X/5 | ... |
+| Comp or Revenue Potential | X/5 | ... |
+| Remote and Lifestyle Fit | X/5 | ... |
+| Impact and Portfolio Signal | X/5 | ... |
+| Speed to Win | X/5 | ... |
+| Risk and Noise | X/5 | ... |
+| Final Score | X/5 | weighted summary |
 
-The **Reflection** column captures what was learned or what would be done differently. This signals seniority — junior candidates describe what happened, senior candidates extract lessons.
+## D. Pursue / Park / Skip Decision
 
-**Story Bank:** If `interview-prep/story-bank.md` exists, check if any of these stories are already there. If not, append new ones. Over time this builds a reusable bank of 5-10 master stories that can be adapted to any interview question.
+Give one decision:
 
-**Seleccionadas y enmarcadas según el arquetipo:**
-- FDE → enfatizar velocidad de entrega y client-facing
-- SA → enfatizar decisiones de arquitectura
-- PM → enfatizar discovery y trade-offs
-- LLMOps → enfatizar métricas, evals, production hardening
-- Agentic → enfatizar orchestration, error handling, HITL
-- Transformation → enfatizar adopción, cambio organizacional
+- `Pursue`
+- `Park`
+- `Skip`
 
-Incluir también:
-- 1 case study recomendado (cuál de sus proyectos presentar y cómo)
-- Preguntas red-flag y cómo responderlas (ej: "¿por qué vendiste tu empresa?", "¿tienes equipo de reports?")
+Then explain:
 
----
+1. Why
+2. What would change the answer
+3. What the user should not overestimate
 
-## Post-evaluación
+## E. Best Artifact
 
-**SIEMPRE** después de generar los bloques A-F:
+Recommend the next artifact and why.
 
-### 1. Guardar report .md
+Examples:
 
-Guardar evaluación completa en `reports/{###}-{company-slug}-{YYYY-MM-DD}.md`.
+- tailored resume
+- cover letter
+- freelance proposal
+- project one-pager
+- learning sprint plan
+- outreach DM
 
-- `{###}` = siguiente número secuencial (3 dígitos, zero-padded)
-- `{company-slug}` = nombre de empresa en lowercase, sin espacios (usar guiones)
-- `{YYYY-MM-DD}` = fecha actual
+If useful, include a short change plan for the artifact.
 
-**Formato del report:**
+## F. Next Action
 
-```markdown
-# Evaluación: {Empresa} — {Rol}
+End with one concrete next action, such as:
 
-**Fecha:** {YYYY-MM-DD}
-**Arquetipo:** {detectado}
-**Score:** {X/5}
-**PDF:** {ruta o pendiente}
+- apply
+- draft proposal
+- ask follow-up questions
+- build MVP outline
+- start a 2-week study sprint
+- park and revisit later
 
----
+## Type-specific Guidance
 
-## A) Resumen del Rol
-(contenido completo del bloque A)
+### If the input is a full-time role
 
-## B) Match con CV
-(contenido completo del bloque B)
+Pay extra attention to:
 
-## C) Nivel y Estrategia
-(contenido completo del bloque C)
+- role fit
+- team and growth path
+- comp
+- location fit
+- interview leverage
 
-## D) Comp y Demanda
-(contenido completo del bloque D)
+Recommended outputs often include:
 
-## E) Plan de Personalización
-(contenido completo del bloque E)
+- resume changes
+- cover letter
+- interview note
 
-## F) Plan de Entrevistas
-(contenido completo del bloque F)
+### If the input is a freelance brief
 
-## G) Draft Application Answers
-(solo si score >= 4.5 — borradores de respuestas para el formulario de aplicación)
+Pay extra attention to:
 
----
+- scope clarity
+- deliverables
+- client quality
+- budget realism
+- risk of unclear ownership
 
-## Keywords extraídas
-(lista de 15-20 keywords del JD para ATS optimization)
-```
+Recommended outputs often include:
 
-### 2. Registrar en tracker
+- proposal
+- scoping note
+- clarifying questions
 
-**SIEMPRE** registrar en `data/applications.md`:
-- Siguiente número secuencial
-- Fecha actual
-- Empresa
-- Rol
-- Score: promedio de match (1-5)
-- Estado: `Evaluada`
-- PDF: ❌ (o ✅ si auto-pipeline generó PDF)
-- Report: link relativo al report .md (ej: `[001](reports/001-company-2026-01-01.md)`)
+### If the input is a side project
 
-**Formato del tracker:**
+Pay extra attention to:
 
-```markdown
-| # | Fecha | Empresa | Rol | Score | Estado | PDF | Report |
-```
+- MVP speed
+- demo value
+- proof of skill
+- strategic reuse
+- likelihood the user will finish it
+
+Recommended outputs often include:
+
+- build vs skip recommendation
+- MVP milestones
+- proof strategy
+
+### If the input is a learning bet
+
+Pay extra attention to:
+
+- applied value
+- proof generated
+- opportunity cost
+- direct relevance to target roles
+
+Recommended outputs often include:
+
+- timebox
+- weekly sprint plan
+- deliverable checklist
+
+### If the input is a collaboration lead
+
+Pay extra attention to:
+
+- relationship leverage
+- visibility
+- credibility of the other side
+- future option value
+
+Recommended outputs often include:
+
+- outreach note
+- opportunity memo
+- follow-up plan
+
+## Report Persistence
+
+When the user wants the result stored, save a report in:
+
+`reports/{###}-{slug}-{YYYY-MM-DD}.md`
+
+The report header should eventually include:
+
+- `Type`
+- `Source`
+- `URL` if available
+- `Archetype`
+- `Final Score`
+- `Next Action`
