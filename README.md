@@ -107,6 +107,12 @@ The tracker uses a general opportunity lifecycle:
 - `Rejected`
 - `SKIP`
 
+## Planning Docs
+
+- [Product Spec](docs/PRODUCT_SPEC.md)
+- [Data Model](docs/DATA_MODEL.md)
+- [Rebuild Roadmap](docs/REBUILD_ROADMAP.md)
+
 ## License
 
 MIT

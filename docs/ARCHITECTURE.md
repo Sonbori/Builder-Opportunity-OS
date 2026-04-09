@@ -47,3 +47,9 @@ modes/_profile.md
 - `Parked`
 - `Rejected`
 - `SKIP`
+
+## Related Planning Docs
+
+- [Product Spec](PRODUCT_SPEC.md)
+- [Data Model](DATA_MODEL.md)
+- [Rebuild Roadmap](REBUILD_ROADMAP.md)
