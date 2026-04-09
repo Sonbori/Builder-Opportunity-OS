@@ -8,46 +8,13 @@
 import { copyFileSync, existsSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+import { normalizeStatus } from './tracker-status-lib.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const APPS_FILE = existsSync(join(ROOT, 'data/applications.md'))
   ? join(ROOT, 'data/applications.md')
   : join(ROOT, 'applications.md');
 const DRY_RUN = process.argv.includes('--dry-run');
-
-const MAP = {
-  evaluated: 'Evaluated',
-  reviewed: 'Evaluated',
-  scored: 'Evaluated',
-  pursuing: 'Pursuing',
-  contacted: 'Pursuing',
-  responded: 'Pursuing',
-  followup: 'Pursuing',
-  proposed: 'Proposed',
-  proposal_sent: 'Proposed',
-  quoted: 'Proposed',
-  scope_sent: 'Proposed',
-  applied: 'Applied',
-  submitted: 'Applied',
-  sent: 'Applied',
-  interviewing: 'Interviewing',
-  interview: 'Interviewing',
-  won: 'Won',
-  offer: 'Won',
-  accepted: 'Won',
-  closed_won: 'Won',
-  parked: 'Parked',
-  hold: 'Parked',
-  later: 'Parked',
-  backlog: 'Parked',
-  discarded: 'Parked',
-  rejected: 'Rejected',
-  lost: 'Rejected',
-  declined: 'Rejected',
-  skip: 'SKIP',
-  no_fit: 'SKIP',
-  no_apply: 'SKIP',
-};
 
 if (!existsSync(APPS_FILE)) {
   console.log('No applications.md found. Nothing to normalize.');
@@ -66,11 +33,11 @@ for (let i = 0; i < lines.length; i += 1) {
   if (Number.isNaN(num)) continue;
 
   const raw = parts[6].replace(/\*\*/g, '').trim();
-  const key = raw.toLowerCase();
-  const normalized = MAP[key];
-  if (!normalized || normalized === raw) continue;
+  const normalized = normalizeStatus(raw);
+  if (normalized === raw) continue;
 
   parts[6] = normalized;
+  parts[5] = parts[5].replace(/\*\*/g, '').trim();
   lines[i] = `| ${parts.slice(1, -1).join(' | ')} |`;
   console.log(`#${num}: ${raw} -> ${normalized}`);
   changes += 1;

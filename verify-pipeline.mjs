@@ -8,49 +8,18 @@
 import { existsSync, readFileSync, readdirSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+import {
+  CANONICAL_STATUS_LABELS,
+  isValidScore,
+  normalizeStatus,
+  normalizeTrackerKey,
+} from './tracker-status-lib.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const APPS_FILE = existsSync(join(ROOT, 'data/applications.md'))
   ? join(ROOT, 'data/applications.md')
   : join(ROOT, 'applications.md');
 const ADDITIONS_DIR = join(ROOT, 'batch/tracker-additions');
-
-const CANONICAL_STATUSES = [
-  'evaluated',
-  'pursuing',
-  'proposed',
-  'applied',
-  'interviewing',
-  'won',
-  'parked',
-  'rejected',
-  'skip',
-];
-
-const ALIASES = {
-  reviewed: 'evaluated',
-  scored: 'evaluated',
-  contacted: 'pursuing',
-  responded: 'pursuing',
-  followup: 'pursuing',
-  proposal_sent: 'proposed',
-  quoted: 'proposed',
-  scope_sent: 'proposed',
-  submitted: 'applied',
-  sent: 'applied',
-  interview: 'interviewing',
-  offer: 'won',
-  accepted: 'won',
-  closed_won: 'won',
-  hold: 'parked',
-  later: 'parked',
-  backlog: 'parked',
-  discarded: 'parked',
-  lost: 'rejected',
-  declined: 'rejected',
-  no_fit: 'skip',
-  no_apply: 'skip',
-};
 
 let errors = 0;
 let warnings = 0;
@@ -96,21 +65,24 @@ for (const line of lines) {
 }
 
 for (const entry of entries) {
-  const clean = entry.status.replace(/\*\*/g, '').trim().toLowerCase();
-  if (!CANONICAL_STATUSES.includes(clean) && !ALIASES[clean]) {
+  const clean = entry.status.replace(/\*\*/g, '').trim();
+  if (!CANONICAL_STATUS_LABELS.includes(clean) && normalizeStatus(clean) === 'Evaluated' && clean !== 'Evaluated') {
     error(`#${entry.num}: non-canonical status "${entry.status}"`);
   }
   if (entry.status.includes('**')) {
     error(`#${entry.num}: status contains markdown formatting`);
   }
-  if (!/^\d+\.?\d*\/5$/.test(entry.score) && entry.score !== 'N/A' && entry.score !== 'DUP') {
+  if (!isValidScore(entry.score)) {
     error(`#${entry.num}: invalid score format "${entry.score}"`);
+  }
+  if (clean === 'Evaluated' && !entry.report) {
+    warn(`#${entry.num}: evaluated item has no report link`);
   }
 }
 
 const dedup = new Map();
 for (const entry of entries) {
-  const key = `${entry.company.toLowerCase()}::${entry.role.toLowerCase()}`;
+  const key = `${normalizeTrackerKey(entry.company)}::${normalizeTrackerKey(entry.role)}`;
   const existing = dedup.get(key) || [];
   existing.push(entry.num);
   dedup.set(key, existing);
